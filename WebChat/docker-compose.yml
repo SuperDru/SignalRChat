@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: superdru:webchat_api
+    ports:
+      - "5000:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
