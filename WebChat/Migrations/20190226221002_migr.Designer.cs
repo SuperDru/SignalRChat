@@ -10,8 +10,8 @@ using WebChat.Database;
 namespace WebChat.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    [Migration("20190223154416_ChatMigr1")]
-    partial class ChatMigr1
+    [Migration("20190226221002_migr")]
+    partial class migr
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,8 +32,11 @@ namespace WebChat.Migrations
                     b.Property<string>("MessageValue")
                         .HasColumnName("message_value");
 
-                    b.Property<int?>("RoomId")
+                    b.Property<int>("RoomId")
                         .HasColumnName("room_id");
+
+                    b.Property<int>("Type")
+                        .HasColumnName("type");
 
                     b.HasKey("SendingTime", "UserId");
 
@@ -58,13 +61,35 @@ namespace WebChat.Migrations
                     b.Property<string>("Name")
                         .HasColumnName("name");
 
+                    b.Property<int>("UserId")
+                        .HasColumnName("user_id");
+
                     b.HasKey("Id")
                         .HasName("pk_rooms");
 
                     b.HasIndex("Name")
                         .IsUnique();
 
+                    b.HasIndex("UserId")
+                        .HasName("ix_rooms_user_id");
+
                     b.ToTable("rooms");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2017, 1, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Developers",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CreatedAt = new DateTime(2016, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Managers",
+                            UserId = 3
+                        });
                 });
 
             modelBuilder.Entity("WebChat.Database.Model.RoomCredential", b =>
@@ -82,6 +107,20 @@ namespace WebChat.Migrations
                         .HasName("pk_room_credentials");
 
                     b.ToTable("room_credentials");
+
+                    b.HasData(
+                        new
+                        {
+                            RoomId = 1,
+                            HashedPassword = "cIoBrtd+h++b9YDUUI70U9lLtPqZVkgEBQGhEsCgApI=",
+                            Salt = new byte[] { 92, 190, 212, 211, 31, 252, 31, 131, 119, 115, 202, 30, 248, 16, 33, 199 }
+                        },
+                        new
+                        {
+                            RoomId = 2,
+                            HashedPassword = "R+B+7Wog3dF5v4HR5TEfw7ePF7aSbhYp5jVf3c2qWDM=",
+                            Salt = new byte[] { 11, 204, 221, 177, 8, 199, 167, 39, 45, 144, 135, 165, 5, 156, 48, 214 }
+                        });
                 });
 
             modelBuilder.Entity("WebChat.Database.Model.User", b =>
@@ -106,6 +145,23 @@ namespace WebChat.Migrations
                         .IsUnique();
 
                     b.ToTable("users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Nickname = "JFoster"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Nickname = "AShishkin"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Nickname = "AShurikov"
+                        });
                 });
 
             modelBuilder.Entity("WebChat.Database.Model.UserCredential", b =>
@@ -123,6 +179,26 @@ namespace WebChat.Migrations
                         .HasName("pk_user_credentials");
 
                     b.ToTable("user_credentials");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = 1,
+                            HashedPassword = "EpbX3suZ7GVJ6gALNOLlMCZvZnajvSEcPSfA6eOguCE=",
+                            Salt = new byte[] { 32, 46, 151, 129, 184, 45, 169, 11, 45, 209, 210, 50, 2, 185, 48, 33 }
+                        },
+                        new
+                        {
+                            UserId = 2,
+                            HashedPassword = "7MgGZN2qI0t9xKEbpQ51DrCpfF+2gYOBLEH50VGX/o4=",
+                            Salt = new byte[] { 227, 156, 82, 234, 222, 150, 232, 35, 18, 231, 10, 105, 154, 119, 152, 255 }
+                        },
+                        new
+                        {
+                            UserId = 3,
+                            HashedPassword = "x5NOObMlygjfoYNWBaNPSYt7BoiomAaDWqLL9JIs7vM=",
+                            Salt = new byte[] { 138, 159, 214, 35, 114, 199, 250, 30, 176, 40, 32, 244, 61, 8, 120, 60 }
+                        });
                 });
 
             modelBuilder.Entity("WebChat.Database.Model.Message", b =>
@@ -130,12 +206,22 @@ namespace WebChat.Migrations
                     b.HasOne("WebChat.Database.Model.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
-                        .HasConstraintName("fk_messages_rooms_room_id");
+                        .HasConstraintName("fk_messages_rooms_room_id")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebChat.Database.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("fk_messages_users_user_id")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WebChat.Database.Model.Room", b =>
+                {
+                    b.HasOne("WebChat.Database.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("fk_rooms_users_user_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -25,6 +25,16 @@ namespace WebChat.Database
             
             builder.Entity<User>().HasIndex(u => u.Nickname).IsUnique();
             builder.Entity<Room>().HasIndex(r => r.Name).IsUnique();
+            
+            InitEntities(builder);
+        }
+
+        private static void InitEntities(ModelBuilder builder)
+        {
+            builder.Entity<User>().Init();
+            builder.Entity<Room>().Init();
+            builder.Entity<UserCredential>().Init();
+            builder.Entity<RoomCredential>().Init();
         }
     }
 }

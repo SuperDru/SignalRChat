@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebChat.Database;
@@ -9,9 +10,10 @@ using WebChat.Database;
 namespace WebChat.Migrations
 {
     [DbContext(typeof(ChatDbContext))]
-    partial class ChatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190225221154_ChatMigr1")]
+    partial class ChatMigr1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +32,7 @@ namespace WebChat.Migrations
                     b.Property<string>("MessageValue")
                         .HasColumnName("message_value");
 
-                    b.Property<int>("RoomId")
+                    b.Property<int?>("RoomId")
                         .HasColumnName("room_id");
 
                     b.Property<int>("Type")
@@ -67,9 +69,6 @@ namespace WebChat.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique();
-
-                    b.HasIndex("UserId")
-                        .HasName("ix_rooms_user_id");
 
                     b.ToTable("rooms");
 
@@ -110,14 +109,14 @@ namespace WebChat.Migrations
                         new
                         {
                             RoomId = 1,
-                            HashedPassword = "PPX8GDu6mBzWsrlhmd2YES09Xxqg9zodg4YpwXqE78A=",
-                            Salt = new byte[] { 223, 54, 155, 234, 69, 21, 182, 205, 175, 229, 95, 171, 155, 244, 208, 136 }
+                            HashedPassword = "Yd1P1uBMBaie1UfzXOc7U5STpkCH1ZlTbVraHzz8wao=",
+                            Salt = new byte[] { 168, 56, 167, 119, 234, 43, 127, 156, 135, 63, 41, 12, 252, 24, 114, 225 }
                         },
                         new
                         {
                             RoomId = 2,
-                            HashedPassword = "Tmwj0kFo8lyxxxfU14K/Sbnt8nJsGqjJpAbJiavYpOs=",
-                            Salt = new byte[] { 151, 246, 200, 5, 32, 134, 87, 132, 52, 226, 214, 187, 189, 175, 226, 166 }
+                            HashedPassword = "FBzBQr4AuYLEZrZUheYXbMpxfoDwcLRm8w3s6rviwoY=",
+                            Salt = new byte[] { 126, 102, 242, 88, 56, 152, 20, 127, 12, 26, 80, 219, 74, 166, 193, 135 }
                         });
                 });
 
@@ -182,20 +181,20 @@ namespace WebChat.Migrations
                         new
                         {
                             UserId = 1,
-                            HashedPassword = "yfsoPj8WKltZ1F5z3ZQ5ynK/jBmHgZJ+Mh0st9GawFI=",
-                            Salt = new byte[] { 101, 215, 149, 8, 100, 101, 22, 27, 240, 58, 164, 110, 39, 197, 8, 97 }
+                            HashedPassword = "koN6PsQVv1TPUdk9JUxp7vMtTfMaBskBWFHXdfbgkpw=",
+                            Salt = new byte[] { 138, 37, 136, 66, 236, 1, 5, 239, 142, 195, 47, 41, 62, 140, 2, 138 }
                         },
                         new
                         {
                             UserId = 2,
-                            HashedPassword = "dTsd0qaAFkzXVJw10viNng4NAajZfHcrG88DPrIZPJM=",
-                            Salt = new byte[] { 139, 26, 81, 250, 117, 128, 76, 235, 184, 138, 49, 225, 237, 76, 126, 220 }
+                            HashedPassword = "BQAd2cvEAnZ+Q+mS1/9AAVeL3qGO7LX6K9Q6SMT+SyQ=",
+                            Salt = new byte[] { 107, 44, 79, 242, 223, 79, 53, 175, 36, 239, 46, 88, 40, 69, 9, 9 }
                         },
                         new
                         {
                             UserId = 3,
-                            HashedPassword = "dnVQh5/iMCv80Epqm1YKTW1d7o17ZbpdRgyfIRFOfrg=",
-                            Salt = new byte[] { 183, 23, 14, 204, 44, 7, 36, 234, 160, 78, 96, 194, 251, 99, 79, 199 }
+                            HashedPassword = "m2CpuyG7OLyTgYkelSJ0MgiQEp+NthUTmFXXZrCKtO0=",
+                            Salt = new byte[] { 165, 204, 114, 243, 14, 184, 94, 232, 188, 127, 7, 236, 211, 98, 123, 93 }
                         });
                 });
 
@@ -204,22 +203,12 @@ namespace WebChat.Migrations
                     b.HasOne("WebChat.Database.Model.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
-                        .HasConstraintName("fk_messages_rooms_room_id")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasConstraintName("fk_messages_rooms_room_id");
 
                     b.HasOne("WebChat.Database.Model.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .HasConstraintName("fk_messages_users_user_id")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("WebChat.Database.Model.Room", b =>
-                {
-                    b.HasOne("WebChat.Database.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("fk_rooms_users_user_id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -15,7 +15,8 @@ namespace WebChat.Migrations
                     id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn),
                     name = table.Column<string>(nullable: true),
-                    created_at = table.Column<DateTime>(nullable: false)
+                    created_at = table.Column<DateTime>(nullable: false),
+                    user_id = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -68,7 +69,8 @@ namespace WebChat.Migrations
                     sending_time = table.Column<DateTime>(nullable: false),
                     user_id = table.Column<int>(nullable: false),
                     message_value = table.Column<string>(nullable: true),
-                    room_id = table.Column<int>(nullable: true)
+                    room_id = table.Column<int>(nullable: true),
+                    type = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -104,6 +106,44 @@ namespace WebChat.Migrations
                         principalTable: "users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "rooms",
+                columns: new[] { "id", "created_at", "name", "user_id" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2017, 1, 29, 0, 0, 0, 0, DateTimeKind.Unspecified), "Developers", 1 },
+                    { 2, new DateTime(2016, 5, 13, 0, 0, 0, 0, DateTimeKind.Unspecified), "Managers", 3 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "users",
+                columns: new[] { "id", "current_room_id", "nickname" },
+                values: new object[,]
+                {
+                    { 1, null, "JFoster" },
+                    { 2, null, "AShishkin" },
+                    { 3, null, "AShurikov" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "room_credentials",
+                columns: new[] { "room_id", "hashed_password", "salt" },
+                values: new object[,]
+                {
+                    { 1, "Yd1P1uBMBaie1UfzXOc7U5STpkCH1ZlTbVraHzz8wao=", new byte[] { 168, 56, 167, 119, 234, 43, 127, 156, 135, 63, 41, 12, 252, 24, 114, 225 } },
+                    { 2, "FBzBQr4AuYLEZrZUheYXbMpxfoDwcLRm8w3s6rviwoY=", new byte[] { 126, 102, 242, 88, 56, 152, 20, 127, 12, 26, 80, 219, 74, 166, 193, 135 } }
+                });
+
+            migrationBuilder.InsertData(
+                table: "user_credentials",
+                columns: new[] { "user_id", "hashed_password", "salt" },
+                values: new object[,]
+                {
+                    { 1, "koN6PsQVv1TPUdk9JUxp7vMtTfMaBskBWFHXdfbgkpw=", new byte[] { 138, 37, 136, 66, 236, 1, 5, 239, 142, 195, 47, 41, 62, 140, 2, 138 } },
+                    { 2, "BQAd2cvEAnZ+Q+mS1/9AAVeL3qGO7LX6K9Q6SMT+SyQ=", new byte[] { 107, 44, 79, 242, 223, 79, 53, 175, 36, 239, 46, 88, 40, 69, 9, 9 } },
+                    { 3, "m2CpuyG7OLyTgYkelSJ0MgiQEp+NthUTmFXXZrCKtO0=", new byte[] { 165, 204, 114, 243, 14, 184, 94, 232, 188, 127, 7, 236, 211, 98, 123, 93 } }
                 });
 
             migrationBuilder.CreateIndex(
