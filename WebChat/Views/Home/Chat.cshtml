@@ -1,0 +1,31 @@
+@{
+    ViewData["Title"] = "Room Page";
+}
+
+<style>
+    .center1 {
+        margin: auto;
+        width: 25%;
+    }
+    .center2 {
+        margin: auto;
+        width: 60%;
+    }
+    
+</style>
+
+<div id="div1">
+    <div class="center2 text-center" style="height: 400px">
+        <div class="container-fluid bg-light h-75">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item mb-0">Cras justo odio</li>
+                <li class="list-group-item mb-0">Dapibus ac facilisis in</li>
+                <li class="list-group-item mb-1">Morbi leo risus</li>
+                <li class="list-group-item mb-1">Porta ac consectetur ac</li>
+                <li class="list-group-item mb-1">Vestibulum at eros</li>
+            </ul>
+        </div>
+        <input type="text" id="message_input" placeholder="Enter message"/>
+        <button type="button" class="btn-success" onclick="sendMessage()">Send</button>
+    </div>
+</div>

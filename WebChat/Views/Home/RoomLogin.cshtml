@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Room Page";
+}
+
+<style>
+    .center1 {
+        margin: auto;
+        width: 25%;
+    }
+    
+    .center2 {
+        margin: auto;
+        width: 60%;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin: 0;
+        text-align: left;
+        font-size: small
+    }
+</style>
+
+<div id="div1">
+    <div class="center1 text-center">
+        <input type="text" id="room_name" class="input-group mb-2" placeholder="Room name"/>
+        <input type="password" id="room_password" class="input-group mb-2" placeholder="Room password"/>
+        <button class="btn-success" onclick="join()">Join</button>
+        <button class="btn-success">Create</button>
+    </div>
+</div>

@@ -1,10 +1,20 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Login Page";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <input type="text" class="form-control mb-1" placeholder="Enter message" aria-label="Large" id="message-field">
-    <button onclick="sendMessage()" class="btn-success">Send</button>
+<style>
+    .center1 {
+        margin: auto;
+        width: 25%;
+    }
+    .center2 {
+        margin: auto;
+        width: 60%;
+    }
+</style>
+<div id="div1">
+    <div class="text-center center1">
+        <input type="text" id="nickname_field" class="form-control mb-2" placeholder="Nickname">
+        <input type="password" id="password_field" class="form-control mb-2" placeholder="Password">
+        <button type="button" class="btn-primary" onclick="login()">Submit</button>
+    </div>
 </div>
