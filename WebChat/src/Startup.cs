@@ -11,7 +11,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Qoden.Validation.AspNetCore;
 using WebChat.Database;
+using WebChat.Repositories;
+using WebChat.Services;
 
 namespace WebChat
 {
@@ -28,29 +31,30 @@ namespace WebChat
         {
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(o =>
             {
-                o.Events.OnRedirectToLogin = ctx =>
-                {
-                    ctx.RedirectUri = "/login";
-                    ctx.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    return Task.CompletedTask;
-                };
+                o.LoginPath = "/index";
             });
 
-            services.AddMvc();
+            services.AddMvc(o => { o.Filters.Add<ApiExceptionFilterAttribute>(); });
             services.AddSignalR();
+            services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IRoomService, RoomService>();
             
             ConfigureDatabase(services);
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+//            if (env.IsDevelopment())
+//            {
+//                app.UseDeveloperExceptionPage();
+//            }
 
-            app.UseHttpsRedirection();
+
+            app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseMvc();
