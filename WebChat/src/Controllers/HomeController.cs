@@ -12,9 +12,23 @@ namespace WebChat.Controllers
     [Route("/")]
     public class HomeController : Controller
     {
+        
+        [HttpGet("index")]
+        public IActionResult Index()
+        {
+            return View();
+        }
+        
         [HttpGet]
         [Authorize]
-        public IActionResult Index()
+        public IActionResult RoomLogin()
+        {
+            return View();
+        }
+        
+        [HttpGet("chat")]
+        [Authorize]
+        public IActionResult Chat()
         {
             return View();
         }
