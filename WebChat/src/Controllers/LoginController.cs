@@ -15,12 +15,10 @@ namespace WebChat.Controllers
     [Route("/")]
     public class LoginController: Controller
     {
-        private readonly IUserRepository _rep;
         private readonly IAccountService _accountService;
         
-        public LoginController(IUserRepository rep, IAccountService accountService)
+        public LoginController(IAccountService accountService)
         {
-            _rep = rep;
             _accountService = accountService;
         }
  
@@ -28,13 +26,7 @@ namespace WebChat.Controllers
         [HttpPost("login")]
         public async Task Login([FromBody]Credential cred)
         {
-            var user = await _rep.GetUser(cred.Name);
-            Check.Value(user, "credentials").NotNull(ErrorMessages.CredentialsMsg);
-
-            var correct = await _accountService.CheckPassword(user, cred.Password);
-            Check.Value(correct, "credentials").IsTrue(ErrorMessages.CredentialsMsg);
-
-            await HttpContext.SignInAsync(await _accountService.Login(user));
+            await HttpContext.SignInAsync(await _accountService.Login(cred));
         }
 
         [Authorize]

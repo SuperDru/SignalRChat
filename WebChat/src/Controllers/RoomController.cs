@@ -24,28 +24,13 @@ namespace WebChat.Controllers
         [Authorize]
         public async Task Join([FromBody] Credential credentials)
         {
-            var user = await _userRep.GetUser(User.Identity.Name);
-            var room = await _roomService.GetRoom(credentials.Name);
-
-            Check.Value(room, "room credentials").NotNull(ErrorMessages.CredentialsMsg);
-
-            var check = await _roomService.CheckPassword(room, credentials.Password);
-            
-            Check.Value(check, "room credentials").IsTrue(ErrorMessages.CredentialsMsg);
-
-            await _roomService.JoinRoom(user, room);
+            await _roomService.JoinRoom(User.Identity.Name, credentials);
         }
         
         [HttpPost("create")]
         public async Task Create([FromBody] Credential credentials)
         {
-            
-        }
-        
-        [HttpPost("remove")]
-        public async Task Remove([FromBody] Credential credentials)
-        {
-            
+            await _roomService.CreateRoom(User.Identity.Name, credentials);
         }
     }
 }
