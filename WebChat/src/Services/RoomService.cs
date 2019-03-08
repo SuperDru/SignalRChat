@@ -1,18 +1,19 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Qoden.Validation;
 using WebChat.Database;
 using WebChat.Database.Model;
+using WebChat.DtoModels;
 using WebChat.Repositories;
 
 namespace WebChat.Services
 {
     public interface IRoomService
     {
-        Task<bool> CheckPassword(Room room, string password);
-        Task JoinRoom(User user, Room room);
+        Task JoinRoom(string userName, Credential credentials);
         Task LeaveRoom(User user, Room room);
-        Task CreateRoom(User user, Room room);
-        Task RemoveRoom(User user, Room room);
+        Task CreateRoom(string userName, Credential credentials);
 
         Task<Room> GetRoom(string name);
     }
@@ -27,17 +28,20 @@ namespace WebChat.Services
             _dbContext = dbContext;
             _rep = rep;
         }
-        public async Task<bool> CheckPassword(Room room, string password)
+        private static bool CheckPassword(Room room, string password) =>
+            PasswordGenerator.HashPassword(password, room.Salt) == room.Password;
+
+        public async Task JoinRoom(string userName, Credential credentials)
         {
-            var cred = await _dbContext.RoomCredentials.FirstOrDefaultAsync(c => c.RoomId == room.Id);
+            var user = await _rep.GetUser(userName);
+            var room = await GetRoom(credentials.Name);
 
-            var hashedPassword = PasswordGenerator.HashPassword(password, cred.Salt);
+            Check.Value(room, "room credentials").NotNull(ErrorMessages.CredentialsMsg);
 
-            return hashedPassword == cred.HashedPassword;
-        }
-
-        public async Task JoinRoom(User user, Room room)
-        {
+            var check = CheckPassword(room, credentials.Password);
+            
+            Check.Value(check, "room credentials").IsTrue(ErrorMessages.CredentialsMsg);
+            
             user.CurrentRoom = room;
 
             _dbContext.Users.Update(user);
@@ -60,14 +64,28 @@ namespace WebChat.Services
             return await _dbContext.Rooms.FirstOrDefaultAsync(r => r.Name == name);
         }
 
-        public async Task CreateRoom(User user, Room room)
+        public async Task CreateRoom(string userName, Credential credentials)
         {
-            throw new System.NotImplementedException();
-        }
+            var user = await _rep.GetUser(userName);
+            var room = await GetRoom(credentials.Name);
 
-        public async Task RemoveRoom(User user, Room room)
-        {
-            throw new System.NotImplementedException();
+            Check.Value(room, "room creation").IsNull(ErrorMessages.RoomWithNameExistsMsg(credentials.Name));
+
+            var salt = PasswordGenerator.GenerateSalt();
+            var password = PasswordGenerator.HashPassword(credentials.Password, salt);
+            
+            room = new Room()
+            {
+                Name = credentials.Name,
+                CreatedAt = DateTime.Now,
+                Salt = salt,
+                Password = password,
+                UserId = user.Id
+            };
+
+            await _dbContext.Rooms.AddAsync(room);
+
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

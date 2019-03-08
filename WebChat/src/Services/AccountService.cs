@@ -3,17 +3,18 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Qoden.Validation;
 using WebChat;
 using WebChat.Database;
 using WebChat.Database.Model;
+using WebChat.DtoModels;
 using WebChat.Repositories;
 
 namespace WebChat.Services
 {
     public interface IAccountService
     {
-        Task<bool> CheckPassword(User user, string password);
-        Task<ClaimsPrincipal> Login(User user);
+        Task<ClaimsPrincipal> Login(Credential cred);
     }
 
     public class AccountService : IAccountService
@@ -27,16 +28,10 @@ namespace WebChat.Services
             _rep = rep;
         }
     
-        public async Task<bool> CheckPassword(User user, string password)
-        {
-            var cred = await _dbContext.UserCredentials.FirstOrDefaultAsync(c => c.UserId == user.Id);
+        private static bool CheckPassword(User user, string password) =>
+            PasswordGenerator.HashPassword(password, user.Salt) == user.Password;
 
-            var hashedPassword = PasswordGenerator.HashPassword(password, cred.Salt);
-
-            return hashedPassword == cred.HashedPassword;
-        }
-
-        public async Task<ClaimsPrincipal> Login(User user)
+        private async Task<ClaimsPrincipal> GetClaimsPrincipal(User user)
         {
             var room = await _rep.GetUserRoom(user.Nickname);
             var claims = new List<Claim>
@@ -50,6 +45,17 @@ namespace WebChat.Services
                 ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
 
             return new ClaimsPrincipal(claimsIdentity);
+        }
+        
+        public async Task<ClaimsPrincipal> Login(Credential cred)
+        {
+            var user = await _rep.GetUser(cred.Name);
+            Check.Value(user, "credentials").NotNull(ErrorMessages.CredentialsMsg);
+
+            var correct = CheckPassword(user, cred.Password);
+            Check.Value(correct, "credentials").IsTrue(ErrorMessages.CredentialsMsg);
+
+            return await GetClaimsPrincipal(user);
         }
     }
 }
