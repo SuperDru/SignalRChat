@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="2019-03-08-01-users-seed" author="superdru" context="dev">
+  
+    <insert tableName="users">
+      <column name="nickname" value="JFoster"/>
+      <column name="salt" value="\x202e9781b82da90b2dd1d23202b93021"/>
+      <column name="password" value="EpbX3suZ7GVJ6gALNOLlMCZvZnajvSEcPSfA6eOguCE="/>
+    </insert>  
+	
+    <insert tableName="users">
+      <column name="nickname" value="AShishkin"/>
+	  <column name="salt" value="\xe39c52eade96e82312e70a699a7798ff"/>
+      <column name="password" value="7MgGZN2qI0t9xKEbpQ51DrCpfF+2gYOBLEH50VGX/o4="/>
+    </insert>  
+	
+    <insert tableName="users">
+      <column name="nickname" value="AShurikov"/>
+      <column name="salt" value="\x8a9fd62372c7fa1eb02820f43d08783c"/>
+      <column name="password" value="x5NOObMlygjfoYNWBaNPSYt7BoiomAaDWqLL9JIs7vM="/>
+    </insert>  
+
+  </changeSet>
+</databaseChangeLog>

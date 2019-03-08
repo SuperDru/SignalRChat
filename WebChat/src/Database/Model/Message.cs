@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebChat.Database.Model
 {
@@ -13,8 +15,10 @@ namespace WebChat.Database.Model
     {
         public string MessageValue { get; set; }
         public DateTime SendingTime { get; set; }
+        [ForeignKey("User")]
         public int UserId { get; set; }
         public User User { get; set; }
+        [ForeignKey("Room")]
         public int RoomId { get; set; }
         public Room Room { get; set; }
         public MessageType Type { get; set; }

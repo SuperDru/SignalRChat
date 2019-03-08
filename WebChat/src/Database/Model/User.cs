@@ -10,6 +10,9 @@ namespace WebChat.Database.Model
         
         [ForeignKey("CurrentRoom")]
         public int? CurrentRoomId { get; set; }
-        [CanBeNull] public Room CurrentRoom { get; set; }
+        public Room CurrentRoom { get; set; }
+        
+        public byte[] Salt { get; set; }
+        public string Password { get; set; }
     }
 }

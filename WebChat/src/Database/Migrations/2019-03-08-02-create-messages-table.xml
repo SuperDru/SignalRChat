@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="2019-03-08-02-create-messages-table" author="superdru" context="dev, prod">
+    <createTable tableName="messages">
+	  
+	  <column name="message_value" type="text">
+		<constraints nullable="false"/>
+	  </column>
+	  
+	  <column name="sending_time" type="timestamp">
+		<constraints primaryKey="true" nullable="false"/>
+	  </column>
+	  
+	  <column name="user_id" type="int">
+		<constraints primaryKey="true" nullable="false"/>
+	  </column>
+	  
+	  <column name="room_id" type="int">
+		<constraints nullable="false"/>
+	  </column>
+	  
+	  <column name="type" type="int">
+		<constraints nullable="false"/>
+	  </column>
+	  
+    </createTable>
+	
+	<addForeignKeyConstraint
+        baseTableName="messages"
+        baseColumnNames="user_id"
+        constraintName="fk_messages_user_id__users"
+        referencedColumnNames="id"
+        referencedTableName="users"
+		onDelete="NO ACTION"
+		onUpdate="CASCADE"/>
+		
+	<addForeignKeyConstraint
+        baseTableName="messages"
+        baseColumnNames="room_id"
+        constraintName="fk_messages_room_id__rooms"
+        referencedColumnNames="id"
+        referencedTableName="rooms"
+		onDelete="CASCADE"
+		onUpdate="CASCADE"/>		
+
+  </changeSet>
+</databaseChangeLog>

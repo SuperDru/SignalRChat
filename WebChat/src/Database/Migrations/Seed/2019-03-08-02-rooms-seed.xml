@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+  <changeSet id="2019-03-08-02-rooms-seed" author="superdru" context="dev">
+  
+    <insert tableName="rooms">
+      <column name="name" value="Developers"/>
+      <column name="created_at" value="2017-01-29"/>
+      <column name="user_id" value="1"/>
+      <column name="salt" value="\x5cbed4d31ffc1f837773ca1ef81021c7"/>
+      <column name="password" value="cIoBrtd+h++b9YDUUI70U9lLtPqZVkgEBQGhEsCgApI="/>
+    </insert>  
+	
+    <insert tableName="rooms">
+      <column name="name" value="Managers"/>
+      <column name="created_at" value="2016-05-13"/>
+      <column name="user_id" value="3"/>
+      <column name="salt" value="\x0bccddb108c7a7272d9087a5059c30d6"/>
+      <column name="password" value="R+B+7Wog3dF5v4HR5TEfw7ePF7aSbhYp5jVf3c2qWDM="/>
+    </insert> 
+
+  </changeSet>
+</databaseChangeLog>
