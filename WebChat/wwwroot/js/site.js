@@ -3,6 +3,8 @@ const con = new signalR.HubConnectionBuilder()
     .withUrl("/chatHub")
     .build();
 
+const host = location.protocol + '//' + location.host;
+
 con.on("broadcast", (user, msg, time) => {
     msg = time + "  " + user + ": " + msg;
     const li = document.createElement("li");
@@ -31,14 +33,14 @@ const login = function () {
 
     xhr.onreadystatechange = function() {
         if (xhr.readyState != 4 || xhr.status != 200) return;
-        location.href = "https://localhost:5001/";
+        location.href = host;
     };
     
     const signInRequest = JSON.stringify({
         name: nickname,
         password: password,
     });
-    xhr.open('POST', 'https://localhost:5001/login', true);
+    xhr.open('POST', host + '/login', true);
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.withCredentials = true;
     xhr.send(signInRequest);
@@ -78,7 +80,31 @@ const join = function () {
     });    
 
     
-    xhr.open('POST', 'https://localhost:5001/chat/join', true);
+    xhr.open('POST', host + '/chat/join', true);
+    xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    xhr.withCredentials = true;
+    xhr.send(request);
+};
+
+const create = function () {
+    const roomName = document.getElementById("room_name").value;
+    const roomPassword = document.getElementById("room_password").value;
+
+    console.log("create");
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState != 4 || xhr.status != 200) return;
+        join();
+    };
+
+    const request = JSON.stringify({
+        name: roomName,
+        password: roomPassword,
+    });
+
+
+    xhr.open('POST', host + '/chat/create', true);
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.withCredentials = true;
     xhr.send(request);
