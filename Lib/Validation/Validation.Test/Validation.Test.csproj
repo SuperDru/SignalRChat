@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netcoreapp2.0</TargetFramework>
+		<AssemblyName>Qoden.Validation.Test</AssemblyName>
+		<IsPackable>false</IsPackable>
+		<RootNamespace>Test</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<ProjectReference Include="../Validation/Qoden.Validation.csproj" />
+		<ProjectReference Include="../AspNetCore/Qoden.Validation.AspNetCore.csproj" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3" />
+		<PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
+		<PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="Test.csproj" />
+	</ItemGroup>
+</Project>

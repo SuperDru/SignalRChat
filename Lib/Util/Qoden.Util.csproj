@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81</PackageTargetFallback>
+    <PackageId>Qoden.Util</PackageId>
+    <Authors>Qoden Technologies</Authors>
+    <Description>Small utilities which does not fit into any other Qoden packages</Description>
+	<PackageVersion>1.1.1</PackageVersion>
+	<IncludeSymbols>true</IncludeSymbols>
+    
+    <PackageOutputPath Condition="$(LocalNugetFeed) != ''">$(LocalNugetFeed)</PackageOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Qoden.Util.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Xam.Plugin.DeviceInfo" Version="3.0.1" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.4.0" />
+    <PackageReference Include="Serilog" Version="2.7.1" />
+  </ItemGroup>
+</Project>

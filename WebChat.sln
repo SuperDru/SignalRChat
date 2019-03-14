@@ -4,6 +4,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat", "WebChat\WebChat.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebChat.Test", "WebChat.Test\WebChat.Test.csproj", "{04C5EB10-B624-45B9-BE01-F8998971415C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{CE894C94-FD37-4249-A95C-362CEA0FA717}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qoden.Util", "Lib\Util\Qoden.Util.csproj", "{DED88D86-F7EC-463C-A55B-EFF7A6D3FD4D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qoden.Validation", "Lib\Validation\Validation\Qoden.Validation.csproj", "{82945CC4-8141-48FB-A458-5C90E6AC6314}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qoden.Validation.AspNetCore", "Lib\Validation\AspNetCore\Qoden.Validation.AspNetCore.csproj", "{3434251C-737B-4F4E-97AE-3BA0D0E15E22}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +26,22 @@ Global
 		{04C5EB10-B624-45B9-BE01-F8998971415C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04C5EB10-B624-45B9-BE01-F8998971415C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04C5EB10-B624-45B9-BE01-F8998971415C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DED88D86-F7EC-463C-A55B-EFF7A6D3FD4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DED88D86-F7EC-463C-A55B-EFF7A6D3FD4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DED88D86-F7EC-463C-A55B-EFF7A6D3FD4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DED88D86-F7EC-463C-A55B-EFF7A6D3FD4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82945CC4-8141-48FB-A458-5C90E6AC6314}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82945CC4-8141-48FB-A458-5C90E6AC6314}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82945CC4-8141-48FB-A458-5C90E6AC6314}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82945CC4-8141-48FB-A458-5C90E6AC6314}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3434251C-737B-4F4E-97AE-3BA0D0E15E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3434251C-737B-4F4E-97AE-3BA0D0E15E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3434251C-737B-4F4E-97AE-3BA0D0E15E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3434251C-737B-4F4E-97AE-3BA0D0E15E22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DED88D86-F7EC-463C-A55B-EFF7A6D3FD4D} = {CE894C94-FD37-4249-A95C-362CEA0FA717}
+		{82945CC4-8141-48FB-A458-5C90E6AC6314} = {CE894C94-FD37-4249-A95C-362CEA0FA717}
+		{3434251C-737B-4F4E-97AE-3BA0D0E15E22} = {CE894C94-FD37-4249-A95C-362CEA0FA717}
 	EndGlobalSection
 EndGlobal
