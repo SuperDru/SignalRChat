@@ -42,19 +42,13 @@ namespace WebChat
 
             usersConnections.TryGetValue(LoginName, out var count);
 
-            var history = await _messageRepository.GetAllMessages(user.CurrentRoom);
+            var history = (await _messageRepository.GetAllMessages(user.CurrentRoom)).OrderBy(m => m.SendingTime);
             
             foreach (var m in history)
             {
-                if (m.Type == MessageType.Broadcast)
                     await Clients.Caller.SendAsync(
-                        "broadcast", 
+                        m.Type.ToString().ToLower(), 
                         m.User.Nickname,
-                        m.MessageValue,
-                        m.SendingTime.ToString("HH:mm:ss"));
-                else if (m.Type == MessageType.Info)
-                    await Clients.Caller.SendAsync(
-                        "info", 
                         m.MessageValue,
                         m.SendingTime.ToString("HH:mm:ss"));
             }
@@ -67,6 +61,7 @@ namespace WebChat
                 
                 await Clients.Group(Room).SendAsync(
                     "info", 
+                    message.User.Nickname,
                     message.MessageValue, 
                     message.SendingTime.ToString("HH:mm:ss"));
             }
@@ -83,13 +78,14 @@ namespace WebChat
                 
                 await Clients.Group(Room).SendAsync(
                     "info", 
+                    message.User.Nickname,
                     message.MessageValue, 
                     message.SendingTime.ToString("HH:mm:ss"));
 
                 await _messageRepository.AddMessage(message);
                 
                 var user = await _userRepository.GetUser(LoginName);
-                await _roomService.LeaveRoom(user, user.CurrentRoom);
+                await _roomService.LeaveRoom(LoginName);
             }
 
             await base.OnDisconnectedAsync(exception);
