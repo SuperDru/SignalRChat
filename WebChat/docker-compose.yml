@@ -14,8 +14,6 @@ services:
           - "5000:80"
         environment:    
             Database__ConnectionString: Host=postgres;Port=5432;Database=mydb;Username=mydb;Password=mydb
-        networks:
-          - aspnetcoreapp-network
       
     postgres:
         container_name: 'postgres'
@@ -37,6 +35,7 @@ services:
           - "postgres"
         depends_on:
           - "postgres"
+        command: bash -c 'while ! nc -z postgres 5432; do sleep 1; done;'
         environment:
           - loglevel=debug
           - username=mydb
