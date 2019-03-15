@@ -19,9 +19,5 @@
         <PackageReference Include="Qoden.Validation" Version="1.0.8" />
         <PackageReference Include="Qoden.Validation.AspNetCore" Version="1.0.7" />
     </ItemGroup>
-
-
-    <!--<ItemGroup>-->
-        <!--<None Include="wwwroot\*\**" />-->
-    <!--</ItemGroup>-->
+    
 </Project>
