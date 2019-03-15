@@ -27,6 +27,13 @@ namespace WebChat.Controllers
             await _roomService.JoinRoom(User.Identity.Name, credentials);
         }
         
+        [HttpPost("leave")]
+        [Authorize]
+        public async Task Leave()
+        {
+            await _roomService.LeaveRoom(User.Identity.Name);
+        }
+        
         [HttpPost("create")]
         public async Task Create([FromBody] Credential credentials)
         {

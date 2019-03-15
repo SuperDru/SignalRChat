@@ -12,7 +12,7 @@ con.on("broadcast", (user, msg, time) => {
     document.getElementById("messages").appendChild(li);
 });
 
-con.on("info", (msg, time) => {
+con.on("info", (user, msg, time) => {
     const li = document.createElement("li");
     li.textContent = time + "  " + msg;
     //li.textContent.fontcolor("red");

@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <DefineConstants>$(DefineConstants);__NET_CORE__</DefineConstants>
+    <AssemblyName>Qoden.Validation.AspNetCore</AssemblyName>
+    <PackageId>Qoden.Validation.AspNetCore</PackageId>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PackageOutputPath Condition="$(LocalNugetFeed) != ''">$(LocalNugetFeed)</PackageOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="src\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Qoden.Validation.AspNetCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Validation/Qoden.Validation.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.3" />
+  </ItemGroup>
+</Project>

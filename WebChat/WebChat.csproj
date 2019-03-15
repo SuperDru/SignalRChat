@@ -16,8 +16,17 @@
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.2.0" />
-        <PackageReference Include="Qoden.Validation" Version="1.0.8" />
-        <PackageReference Include="Qoden.Validation.AspNetCore" Version="1.0.7" />
     </ItemGroup>
     
+<<<<<<< HEAD
+=======
+    <ItemGroup>
+        <ProjectReference Include="..\Lib\Validation\AspNetCore\Qoden.Validation.AspNetCore.csproj" />
+        <ProjectReference Include="..\Lib\Validation\Validation\Qoden.Validation.csproj" />
+    </ItemGroup>
+
+    <!--<ItemGroup>-->
+        <!--<None Include="wwwroot\*\**" />-->
+    <!--</ItemGroup>-->
+>>>>>>> 93cb42b170b7a25163ae6b8703d99b6735abbda9
 </Project>

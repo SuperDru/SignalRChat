@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace WebChat
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((ctx, builder) =>
                 {
-                    builder.AddJsonFile("Configuration/config.json");
+                    var ha = builder.Properties;
                     builder.AddEnvironmentVariables();
                     builder.AddCommandLine(args);
                 })

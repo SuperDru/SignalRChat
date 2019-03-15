@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>Qoden.Validation</AssemblyName>
+    <PackageId>Qoden.Validation</PackageId>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PackageOutputPath Condition="$(LocalNugetFeed) != ''">$(LocalNugetFeed)</PackageOutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Qoden.Validation.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../Util/Qoden.Util.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="4.4.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.1.1" />
+  </ItemGroup>
+</Project>

@@ -12,7 +12,7 @@ namespace WebChat.Services
     public interface IRoomService
     {
         Task JoinRoom(string userName, Credential credentials);
-        Task LeaveRoom(User user, Room room);
+        Task LeaveRoom(string userName);
         Task CreateRoom(string userName, Credential credentials);
 
         Task<Room> GetRoom(string name);
@@ -49,8 +49,10 @@ namespace WebChat.Services
             await _dbContext.SaveChangesAsync();
         }
         
-        public async Task LeaveRoom(User user, Room room)
+        public async Task LeaveRoom(string userName)
         {
+            var user = await _rep.GetUser(userName);
+            
             user.CurrentRoom = null;
             user.CurrentRoomId = null;
             
