@@ -22,7 +22,6 @@ namespace WebChat
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((ctx, builder) =>
                 {
-                    var ha = builder.Properties;
                     builder.AddEnvironmentVariables();
                     builder.AddCommandLine(args);
                 })

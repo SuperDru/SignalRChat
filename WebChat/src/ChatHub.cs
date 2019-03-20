@@ -16,10 +16,10 @@ namespace WebChat
     [Authorize]
     public class ChatHub: Hub
     {
-        private static ConcurrentDictionary<string, int> usersConnections = new ConcurrentDictionary<string, int>();
-        private static Dictionary<string, string> usersRooms = new Dictionary<string, string>();
+        private static readonly ConcurrentDictionary<string, int> UsersConnections = new ConcurrentDictionary<string, int>();
+        private static readonly ConcurrentDictionary<string, string> UsersRooms = new ConcurrentDictionary<string, string>();
         private string LoginName => Context.User.Identity.Name;
-        private string Room => usersRooms[LoginName];
+        private string Room => UsersRooms[LoginName];
 
         private readonly IMessageRepository _messageRepository;
         private readonly IUserRepository _userRepository;
@@ -34,13 +34,15 @@ namespace WebChat
         
         public override async Task OnConnectedAsync()
         {   
-            var user = await _userRepository.GetUser(LoginName);          
-            usersRooms[LoginName] = user.CurrentRoom.Name;
+            var user = await _userRepository.GetUser(LoginName);
+            UsersRooms.AddOrUpdate(LoginName, 
+                k => user.CurrentRoom.Name, 
+                (k, v) => user.CurrentRoom.Name);
             
             await Groups.AddToGroupAsync(Context.ConnectionId, Room);
-            usersConnections.AddOrUpdate(LoginName, k => 1, (k, v) => ++v);
+            UsersConnections.AddOrUpdate(LoginName, k => 1, (k, v) => ++v);
 
-            usersConnections.TryGetValue(LoginName, out var count);
+            UsersConnections.TryGetValue(LoginName, out var count);
 
             var history = (await _messageRepository.GetAllMessages(user.CurrentRoom)).OrderBy(m => m.SendingTime);
             
@@ -71,8 +73,8 @@ namespace WebChat
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            usersConnections[LoginName] -= 1;
-            if (usersConnections[LoginName] == 0)
+            UsersConnections[LoginName] -= 1;
+            if (UsersConnections[LoginName] == 0)
             {
                 var message = await BuildMessage($"{LoginName} has left the room.", MessageType.Info);
                 
