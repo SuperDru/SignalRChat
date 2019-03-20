@@ -10,6 +10,7 @@
 	<include file="2019-03-08-01-create-users-table.xml" relativeToChangelogFile="true"/>
 	<include file="2019-03-08-02-create-foreign-keys-constraints.xml" relativeToChangelogFile="true"/>
 	<include file="2019-03-08-02-create-messages-table.xml" relativeToChangelogFile="true"/>
+	<include file="2019-03-19-03-add-type-column-into-rooms.xml" relativeToChangelogFile="true"/>
 	
 	<include file="Seed/index.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

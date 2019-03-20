@@ -26,11 +26,11 @@
 	  </column>
 	  
 	  <column name="salt" type="bytea">
-		<constraints nullable="false"/>
+		<constraints nullable="true"/>
 	  </column>
 	  
 	  <column name="password" type="text">
-		<constraints nullable="false"/>
+		<constraints nullable="true"/>
 	  </column>
 	  
     </createTable>

@@ -1,0 +1,1 @@
+liquibase --changeLogFile=index.xml --username=postgres --password=QWE321EWQ --url=jdbc:postgresql://localhost:5432/webchat_test --driver=org.postgresql.Driver --classpath=postgresql-42.2.5.jar --logLevel=debug --contexts="dev" update

@@ -15,5 +15,7 @@ namespace WebChat.Database.Model
         
         public byte[] Salt { get; set; }
         public string Password { get; set; }
+
+        public bool IsPublic { get; set; }
     }
 }
